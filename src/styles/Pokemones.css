@@ -20,8 +20,8 @@
 }
 
 .pokemon-card:hover {
-  transform: scale(1.1);
-  background-color: #c9fffaf0;
+  transform: scale(1.01);
+  background-color: #b5fff5;
   box-shadow: 4px 4px 50px 4px #00000020;
 }
 

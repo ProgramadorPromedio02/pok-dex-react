@@ -1,7 +1,10 @@
 //COMPONENTE Pokemones.jsx
 
-import { useEffect, useState } from "react";
+import usePokemones from "../hooks/usePokemones";
+import InfiniteScroll from "react-infinite-scroll-component";
 import "../styles/Pokemones.css";
+import "../styles/Buscador.css";
+import Cargando from "./Cargando";
 
 function Pokemon({ id, nombre, imagen }) {
   return (
@@ -16,42 +19,25 @@ function Pokemon({ id, nombre, imagen }) {
 }
 
 function Pokemones() {
-  const [pokemons, setPokemons] = useState([]);
-
-  useEffect(() => {
-    const getPokemons = async () => {
-      // Recuperamos el listado de los pokemon
-      const response = await fetch(
-        "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0"
-      );
-      const listaPokemons = await response.json();
-      const { results } = listaPokemons;
-
-      // Utilizamos Promise.all para esperar a que todas las promesas se resuelvan
-      const newPokemons = await Promise.all(
-        results.map(async (pokemon) => {
-          const response = await fetch(pokemon.url);
-          const poke = await response.json(); // Asegúrate de esperar aquí también
-          return {
-            id: poke.id,
-            nombre: poke.name,
-            imagen: poke.sprites.other.dream_world.front_default,
-          }; // Devolvemos el objeto pokemon resuelto
-        })
-      );
-
-      setPokemons(newPokemons);
-    };
-
-    getPokemons();
-  }, []);
+  const { pokemones, masPokemons, verMas } = usePokemones(); // Incluye verMas aquí
 
   return (
-    <section className="pokemon-container">
-      {pokemons.map((pokemon) => (
+    <InfiniteScroll
+      dataLength={pokemones.length}
+      next={masPokemons}
+      hasMore={verMas} // Utiliza verMas aquí
+      loader={<Cargando />}
+      endMessage={
+        <h3 className="titulo" style={{ gridColumn: "1/6" }}>
+          Lo siento, no hay más pokémon por mostrar
+        </h3>
+      }
+      className="pokemon-container"
+    >
+      {pokemones.map((pokemon) => (
         <Pokemon key={pokemon.id} {...pokemon} />
       ))}
-    </section>
+    </InfiniteScroll>
   );
 }
 
