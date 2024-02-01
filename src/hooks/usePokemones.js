@@ -1,42 +1,44 @@
+// Hook usePokemones.js
+
 import { useEffect, useState } from "react";
 
-const URL_DEFAULT = "https://pokeapi.co/api/v2/pokemon?limit=&offset=0";
+const URL_DEFAULT = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
+const URL_ENDPOINT = "https://pokeapi.co/api/v2/pokemon/";
 
 function usePokemones() {
   const [pokemones, setPokemons] = useState([]);
   const [siguienteUrl, setSiguienteUrl] = useState("");
-  const [verMas, setVerMas] = useState(true); // Define verMas aquí
+  const [verMas, setVerMas] = useState(true);
+
+  const fetchPokemon = async (url) => {
+    const response = await fetch(url);
+    const poke = await response.json();
+
+    const abilities = poke.abilities.map((a) => a.ability.name);
+    const stats = poke.stats.map((s) => {
+      return { name: s.stat.name, base: s.base_stat };
+    });
+    const types = poke.types.map((t) => t.type.name);
+
+    return {
+      id: poke.id,
+      nombre: poke.name,
+      imagen:
+        poke.sprites.other.dream_world.front_default ||
+        poke.sprites.front_default,
+      abilities,
+      stats,
+      types,
+    };
+  };
 
   const getPokemons = async (url = URL_DEFAULT) => {
-    // Recuperamos el listado de los pokemon.
     const response = await fetch(url);
     const listaPokemons = await response.json();
     const { next, results } = listaPokemons;
 
-    // Ahora por cada result (pokemon), necesitamos obtener la información.
-    // Necesitamos esperar a que se resuelvan todas, por eso recurrimos al Promise.all.
     const newPokemons = await Promise.all(
-      results.map(async (pokemon) => {
-        const response = await fetch(pokemon.url);
-        const poke = await response.json();
-
-        const abilities = poke.abilities.map((a) => a.ability.name);
-        const stats = poke.stats.map((s) => {
-          return { name: s.stat.name, base: s.base_stat };
-        });
-        const types = poke.types.map((t) => t.type.name);
-
-        return {
-          id: poke.id,
-          nombre: poke.name,
-          imagen:
-            poke.sprites.other.dream_world.front_default ||
-            poke.sprites.front_default,
-          abilities,
-          stats,
-          types,
-        };
-      })
+      results.map((pokemon) => fetchPokemon(pokemon.url))
     );
 
     return { next, newPokemons };
@@ -49,18 +51,32 @@ function usePokemones() {
   };
 
   const masPokemons = async () => {
+    if (pokemones.length >= 807) {
+      return;
+    }
+
     const { next, newPokemons } = await getPokemons(siguienteUrl);
-    setPokemons((prev) => [...prev, ...newPokemons]);
-    next === null && setVerMas(false);
+    const totalPokemones = [...pokemones, ...newPokemons];
+    const pokemonesToShow = totalPokemones.slice(0, 807);
+
+    setPokemons(pokemonesToShow);
     setSiguienteUrl(next);
+
+    if (pokemonesToShow.length >= 807) {
+      setVerMas(false);
+    }
+  };
+
+  const searchPokemon = async (busqueda) => {
+    const url = `${URL_ENDPOINT}${busqueda.toLocaleLowerCase()}`;
+    return await fetchPokemon(url);
   };
 
   useEffect(() => {
     obtenerPokemons();
   }, []);
 
-  // Retorna el estado de los pokemones y masPokemones en lugar de los Pokemones
-  return { pokemones, masPokemons, verMas }; // Devuelve verMas
+  return { pokemones, masPokemons, verMas, searchPokemon };
 }
 
 export default usePokemones;

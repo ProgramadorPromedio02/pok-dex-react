@@ -55,3 +55,14 @@
 .btn-buscar:focus {
   border: none;
 }
+
+.container-buscar {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .container-buscar {
+    flex-direction: column;
+  }
+}

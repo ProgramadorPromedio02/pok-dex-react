@@ -1,3 +1,5 @@
+//COMPONENTE DetallePokemon.jsx
+
 import "../styles/DetallePokemon.css";
 
 function DetallePokemon({ mostrar, pokemon, cerrar }) {
@@ -14,17 +16,12 @@ function DetallePokemon({ mostrar, pokemon, cerrar }) {
             alt={pokemon.nombre}
             className="imagen-detalle"
           />
-          <section>
-            {pokemon.types?.map(
-              (
-                type,
-                index // Agrega el parámetro index
-              ) => (
-                <span key={index} className="tag">
-                  {type}
-                </span> // Usa index como key
-              )
-            )}
+          <section className="tags-container">
+            {pokemon.types?.map((type, index) => (
+              <span key={index} className="tag">
+                {type}
+              </span>
+            ))}
           </section>
         </div>
         <div className="data">
@@ -32,31 +29,21 @@ function DetallePokemon({ mostrar, pokemon, cerrar }) {
             {pokemon.nombre} [{pokemon.id}]{" "}
           </h2>
           <h3 className="titulo-seccion">Habilidades</h3>
-          {pokemon.abilities?.map(
-            (
-              ability,
-              index // Agrega el parámetro index
-            ) => (
+          <div className="abilities-container">
+            {pokemon.abilities?.map((ability, index) => (
               <span key={index} className="tag">
                 {ability}
-              </span> // Usa index como key
-            )
-          )}
-
+              </span>
+            ))}
+          </div>
           <h3 className="titulo-seccion">Estadísticas</h3>
           <div className="stats">
-            {pokemon.stats?.map(
-              (
-                stat,
-                index // Agrega el parámetro index
-              ) => (
-                <section key={index}>
-                  {" "}
-                  <span className="puntos">{stat.base}</span>
-                  <span>{stat.name}</span>
-                </section> // Usa index como key
-              )
-            )}
+            {pokemon.stats?.map((stat, index) => (
+              <div key={index} className="stat">
+                <span className="stat-name">{stat.name}</span>
+                <span className="puntos">{stat.base}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>

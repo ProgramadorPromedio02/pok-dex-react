@@ -84,3 +84,124 @@
   display: grid;
   place-items: center;
 }
+
+/* Consulta de medios para pantallas pequeñas */
+@media (max-width: 768px) {
+  .modal-body {
+    width: 70%; /* Reducir el ancho del cuerpo del modal */
+    min-width: 20rem; /* Ajustar el ancho mínimo del cuerpo del modal */
+    padding: 2rem; /* Reducir el espacio interno del cuerpo del modal */
+    border: 3rem;
+  }
+
+  .imagen-detalle {
+    width: 200px; /* Reducir el ancho de la imagen del detalle */
+  }
+
+  .tag {
+    padding: 2px 4px; /* Ajustar el relleno de las etiquetas */
+    margin-right: 3px; /* Ajustar el margen derecho de las etiquetas */
+    border-radius: 3px; /* Ajustar el radio del borde de las etiquetas */
+  }
+
+  .data {
+    padding: 0 0.25rem; /* Ajustar el espacio interno de los datos */
+    gap: 5px; /* Reducir el espacio entre elementos */
+  }
+
+  .data .titulo {
+    font-size: 1.25rem; /* Ajustar el tamaño de la fuente del título de los datos */
+  }
+
+  .titulo-seccion {
+    font-size: 1rem; /* Ajustar el tamaño de la fuente del título de sección */
+  }
+
+  .data section {
+    padding: 4px; /* Ajustar el espacio interno de las secciones de datos */
+  }
+
+  .stats {
+    gap: 5px; /* Reducir el espacio entre elementos de estadísticas */
+  }
+
+  .puntos {
+    width: 25px; /* Reducir el tamaño de los puntos */
+    height: 25px;
+    border: none;
+  }
+}
+
+/* Consulta de medios para pantallas muy pequeñas (móviles) */
+@media (max-width: 480px) {
+  .modal-body {
+    width: 100%; /* Reducir aún más el ancho del cuerpo del modal */
+    min-width: 15rem; /* Ajustar el ancho mínimo del cuerpo del modal */
+    padding: 1.5rem; /* Reducir el espacio interno del cuerpo del modal */
+    border: none;
+  }
+
+  .imagen-detalle {
+    width: 150px; /* Reducir aún más el ancho de la imagen del detalle */
+  }
+
+  .tag {
+    padding: 1px 3px; /* Ajustar el relleno de las etiquetas */
+    margin-right: 2px; /* Ajustar el margen derecho de las etiquetas */
+    border-radius: 3px; /* Ajustar el radio del borde de las etiquetas */
+  }
+
+  .data {
+    gap: 3px; /* Reducir aún más el espacio entre elementos de datos */
+  }
+
+  .data .titulo {
+    font-size: 1rem; /* Ajustar aún más el tamaño de la fuente del título de los datos */
+  }
+
+  .titulo-seccion {
+    font-size: 0.875rem; /* Ajustar aún más el tamaño de la fuente del título de sección */
+  }
+
+  .data section {
+    padding: 3px; /* Ajustar aún más el espacio interno de las secciones de datos */
+  }
+
+  .stats {
+    gap: 3px; /* Reducir aún más el espacio entre elementos de estadísticas */
+  }
+
+  .puntos {
+    width: 20px; /* Reducir aún más el tamaño de los puntos */
+    height: 20px;
+    border: none; /* Eliminar el border-radius para evitar deformaciones */
+  }
+}
+
+/* Consulta de medios para tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .modal-body {
+    width: 60%; /* Reducir el ancho del cuerpo del modal para tablets */
+    min-width: 30rem; /* Ajustar el ancho mínimo del cuerpo del modal para tablets */
+  }
+
+  .imagen-detalle {
+    width: 250px; /* Ajustar el ancho de la imagen del detalle para tablets */
+  }
+
+  .puntos {
+    border: none;
+  }
+}
+
+/* Consulta de medios para laptops */
+@media (min-width: 1025px) {
+  .modal-body {
+    width: 50%; /* Reducir el ancho del cuerpo del modal para laptops */
+    min-width: 40rem; /* Ajustar el ancho mínimo del cuerpo del modal para laptops */
+  }
+
+  .imagen-detalle {
+    width: 300px; /* Ajustar el ancho de la imagen del detalle para laptops */
+  }
+}
