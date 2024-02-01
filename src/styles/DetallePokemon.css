@@ -11,7 +11,7 @@
 }
 
 .modal-body {
-  background-color: #fff;
+  background-color: var(--back);
   width: 40%;
   min-width: 50rem;
   border-radius: 5rem;
@@ -57,7 +57,7 @@
 }
 
 .data section {
-  background-color: #eee;
+  background-color: var(--card);
   border-radius: 10px;
   padding: 5px;
   box-shadow: 4px 4px 4px #21212120;

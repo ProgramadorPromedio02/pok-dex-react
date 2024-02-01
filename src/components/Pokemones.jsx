@@ -64,9 +64,7 @@ function Pokemones() {
         hasMore={verMas}
         loader={<Cargando />}
         endMessage={
-          <h3 className="titulo" style={{ gridColumn: "1/6" }}>
-            Lo siento, no hay más pokémon por mostrar
-          </h3>
+          <h3 className="titulo">Lo siento, no hay más pokémon por mostrar</h3>
         }
         className="pokemon-container"
       >
